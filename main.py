@@ -28,6 +28,6 @@ else:
     
     # Check the flag INSTEAD of the 'result'
     if not PARSE_ERROR_FLAG:
-        print("✅ Syntax: Accepted")
+        print(" Syntax: Accepted YAY")
     else:
-        print("❌ Syntax: Rejected (See error messages above)")
+        print(" Syntax: Rejected (See error messages above)")
