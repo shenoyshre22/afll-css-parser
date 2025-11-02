@@ -1,24 +1,22 @@
 # parser.py
-# This file is based on the structure in 7.2 parser.py of your tutorial [cite: 344]
 
 import ply.yacc as yacc
-
-# Get the token map from the lexer. This is required. [cite: 121, 348]
 from lexer import tokens
 
-# --- Parser Grammar Rules ---
+# --- Global Error Flag ---
+PARSE_ERROR_FLAG = False
+# -------------------------
 
 # The top-level rule: a stylesheet is a list of rules
 def p_stylesheet(p):
     '''stylesheet : rules
                   | empty'''
-    p[0] = "Stylesheet" # This is optional, but good practice
+    p[0] = "Stylesheet"
 
 def p_rules(p):
     '''rules : rule
              | rules rule'''
 
-# A single CSS rule: selector_list { declaration_list }
 def p_rule(p):
     'rule : selector_list LBRACE declaration_list RBRACE'
 
@@ -39,32 +37,32 @@ def p_selector_list(p):
 def p_declaration_list(p):
     '''declaration_list : declaration
                         | declaration_list declaration
-                        | empty''' # Allows for empty rule blocks like {}
+                        | empty'''
 
 # --- Helper Rules ---
 
-# A single declaration (e.g., color: red;)
 def p_declaration(p):
     'declaration : IDENTIFIER COLON value SEMICOLON'
 
-# A rule for what a "value" can be
 def p_value(p):
     '''value : IDENTIFIER
              | HEXCOLOR
              | NUMBER
              | NUMBER UNITS'''
 
-# Rule for empty productions (used in declaration_list)
 def p_empty(p):
     'empty :'
     pass
 
-# Error rule for syntax errors [cite: 126, 355]
+# --- Error Rule ---
 def p_error(p):
+    global PARSE_ERROR_FLAG
+    PARSE_ERROR_FLAG = True  # Set the flag to True when an error occurs
+    
     if p:
         print(f"Syntax error at token '{p.value}' (type: {p.type})")
     else:
         print("Syntax error at end of input")
 
-# Build the parser [cite: 129, 359]
+# Build the parser
 parser = yacc.yacc()
