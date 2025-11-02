@@ -1,10 +1,8 @@
 # parser.py
 
 import ply.yacc as yacc
-from lexer import tokens
-
-# --- DELETE THE GLOBAL FLAG ---
-# PARSE_ERROR_FLAG = False  <-- DELETE THIS
+# Import both 'tokens' AND the 'lexer' object
+from lexer import tokens, lexer 
 
 # --- ALL GRAMMAR RULES (p_stylesheet, p_rule, etc.) ARE UNCHANGED ---
 
@@ -49,15 +47,18 @@ def p_empty(p):
 
 # --- THIS FUNCTION IS UPDATED ---
 def p_error(p):
+    lexer_obj = None # Initialize
     if p:
         print(f"Syntax error at token '{p.value}' (type: {p.type})")
         lexer_obj = p.lexer  # Get the lexer from the token
     else:
         print("Syntax error at end of input")
-        lexer_obj = parser.lexer # Get the lexer from the parser object
+        # Get the lexer from the direct import
+        lexer_obj = lexer 
     
     # Set the flag on the lexer instance
-    lexer_obj.error_found = True
+    if lexer_obj:
+        lexer_obj.error_found = True
 
 # Build the parser
 parser = yacc.yacc()
