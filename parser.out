@@ -1,0 +1,329 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> stylesheet
+Rule 1     stylesheet -> rules
+Rule 2     stylesheet -> empty
+Rule 3     rules -> rule
+Rule 4     rules -> rules rule
+Rule 5     rule -> selector_list LBRACE declaration_list RBRACE
+Rule 6     selector -> IDENTIFIER
+Rule 7     selector -> ID_SELECTOR
+Rule 8     selector -> CLASS_SELECTOR
+Rule 9     selector_list -> selector
+Rule 10    selector_list -> selector_list COMMA selector
+Rule 11    declaration_list -> declaration
+Rule 12    declaration_list -> declaration_list declaration
+Rule 13    declaration_list -> empty
+Rule 14    declaration -> IDENTIFIER COLON value SEMICOLON
+Rule 15    value -> IDENTIFIER
+Rule 16    value -> HEXCOLOR
+Rule 17    value -> NUMBER
+Rule 18    value -> NUMBER UNITS
+Rule 19    empty -> <empty>
+
+Terminals, with rules where they appear
+
+CLASS_SELECTOR       : 8
+COLON                : 14
+COMMA                : 10
+HEXCOLOR             : 16
+IDENTIFIER           : 6 14 15
+ID_SELECTOR          : 7
+LBRACE               : 5
+NUMBER               : 17 18
+RBRACE               : 5
+SEMICOLON            : 14
+UNITS                : 18
+error                : 
+
+Nonterminals, with rules where they appear
+
+declaration          : 11 12
+declaration_list     : 5 12
+empty                : 2 13
+rule                 : 3 4
+rules                : 1 4
+selector             : 9 10
+selector_list        : 5 10
+stylesheet           : 0
+value                : 14
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . stylesheet
+    (1) stylesheet -> . rules
+    (2) stylesheet -> . empty
+    (3) rules -> . rule
+    (4) rules -> . rules rule
+    (19) empty -> .
+    (5) rule -> . selector_list LBRACE declaration_list RBRACE
+    (9) selector_list -> . selector
+    (10) selector_list -> . selector_list COMMA selector
+    (6) selector -> . IDENTIFIER
+    (7) selector -> . ID_SELECTOR
+    (8) selector -> . CLASS_SELECTOR
+
+    $end            reduce using rule 19 (empty -> .)
+    IDENTIFIER      shift and go to state 7
+    ID_SELECTOR     shift and go to state 8
+    CLASS_SELECTOR  shift and go to state 9
+
+    stylesheet                     shift and go to state 1
+    rules                          shift and go to state 2
+    empty                          shift and go to state 3
+    rule                           shift and go to state 4
+    selector_list                  shift and go to state 5
+    selector                       shift and go to state 6
+
+state 1
+
+    (0) S' -> stylesheet .
+
+
+
+state 2
+
+    (1) stylesheet -> rules .
+    (4) rules -> rules . rule
+    (5) rule -> . selector_list LBRACE declaration_list RBRACE
+    (9) selector_list -> . selector
+    (10) selector_list -> . selector_list COMMA selector
+    (6) selector -> . IDENTIFIER
+    (7) selector -> . ID_SELECTOR
+    (8) selector -> . CLASS_SELECTOR
+
+    $end            reduce using rule 1 (stylesheet -> rules .)
+    IDENTIFIER      shift and go to state 7
+    ID_SELECTOR     shift and go to state 8
+    CLASS_SELECTOR  shift and go to state 9
+
+    rule                           shift and go to state 10
+    selector_list                  shift and go to state 5
+    selector                       shift and go to state 6
+
+state 3
+
+    (2) stylesheet -> empty .
+
+    $end            reduce using rule 2 (stylesheet -> empty .)
+
+
+state 4
+
+    (3) rules -> rule .
+
+    IDENTIFIER      reduce using rule 3 (rules -> rule .)
+    ID_SELECTOR     reduce using rule 3 (rules -> rule .)
+    CLASS_SELECTOR  reduce using rule 3 (rules -> rule .)
+    $end            reduce using rule 3 (rules -> rule .)
+
+
+state 5
+
+    (5) rule -> selector_list . LBRACE declaration_list RBRACE
+    (10) selector_list -> selector_list . COMMA selector
+
+    LBRACE          shift and go to state 11
+    COMMA           shift and go to state 12
+
+
+state 6
+
+    (9) selector_list -> selector .
+
+    LBRACE          reduce using rule 9 (selector_list -> selector .)
+    COMMA           reduce using rule 9 (selector_list -> selector .)
+
+
+state 7
+
+    (6) selector -> IDENTIFIER .
+
+    LBRACE          reduce using rule 6 (selector -> IDENTIFIER .)
+    COMMA           reduce using rule 6 (selector -> IDENTIFIER .)
+
+
+state 8
+
+    (7) selector -> ID_SELECTOR .
+
+    LBRACE          reduce using rule 7 (selector -> ID_SELECTOR .)
+    COMMA           reduce using rule 7 (selector -> ID_SELECTOR .)
+
+
+state 9
+
+    (8) selector -> CLASS_SELECTOR .
+
+    LBRACE          reduce using rule 8 (selector -> CLASS_SELECTOR .)
+    COMMA           reduce using rule 8 (selector -> CLASS_SELECTOR .)
+
+
+state 10
+
+    (4) rules -> rules rule .
+
+    IDENTIFIER      reduce using rule 4 (rules -> rules rule .)
+    ID_SELECTOR     reduce using rule 4 (rules -> rules rule .)
+    CLASS_SELECTOR  reduce using rule 4 (rules -> rules rule .)
+    $end            reduce using rule 4 (rules -> rules rule .)
+
+
+state 11
+
+    (5) rule -> selector_list LBRACE . declaration_list RBRACE
+    (11) declaration_list -> . declaration
+    (12) declaration_list -> . declaration_list declaration
+    (13) declaration_list -> . empty
+    (14) declaration -> . IDENTIFIER COLON value SEMICOLON
+    (19) empty -> .
+
+  ! shift/reduce conflict for IDENTIFIER resolved as shift
+    IDENTIFIER      shift and go to state 16
+    RBRACE          reduce using rule 19 (empty -> .)
+
+  ! IDENTIFIER      [ reduce using rule 19 (empty -> .) ]
+
+    declaration_list               shift and go to state 13
+    declaration                    shift and go to state 14
+    empty                          shift and go to state 15
+
+state 12
+
+    (10) selector_list -> selector_list COMMA . selector
+    (6) selector -> . IDENTIFIER
+    (7) selector -> . ID_SELECTOR
+    (8) selector -> . CLASS_SELECTOR
+
+    IDENTIFIER      shift and go to state 7
+    ID_SELECTOR     shift and go to state 8
+    CLASS_SELECTOR  shift and go to state 9
+
+    selector                       shift and go to state 17
+
+state 13
+
+    (5) rule -> selector_list LBRACE declaration_list . RBRACE
+    (12) declaration_list -> declaration_list . declaration
+    (14) declaration -> . IDENTIFIER COLON value SEMICOLON
+
+    RBRACE          shift and go to state 18
+    IDENTIFIER      shift and go to state 16
+
+    declaration                    shift and go to state 19
+
+state 14
+
+    (11) declaration_list -> declaration .
+
+    RBRACE          reduce using rule 11 (declaration_list -> declaration .)
+    IDENTIFIER      reduce using rule 11 (declaration_list -> declaration .)
+
+
+state 15
+
+    (13) declaration_list -> empty .
+
+    RBRACE          reduce using rule 13 (declaration_list -> empty .)
+    IDENTIFIER      reduce using rule 13 (declaration_list -> empty .)
+
+
+state 16
+
+    (14) declaration -> IDENTIFIER . COLON value SEMICOLON
+
+    COLON           shift and go to state 20
+
+
+state 17
+
+    (10) selector_list -> selector_list COMMA selector .
+
+    LBRACE          reduce using rule 10 (selector_list -> selector_list COMMA selector .)
+    COMMA           reduce using rule 10 (selector_list -> selector_list COMMA selector .)
+
+
+state 18
+
+    (5) rule -> selector_list LBRACE declaration_list RBRACE .
+
+    IDENTIFIER      reduce using rule 5 (rule -> selector_list LBRACE declaration_list RBRACE .)
+    ID_SELECTOR     reduce using rule 5 (rule -> selector_list LBRACE declaration_list RBRACE .)
+    CLASS_SELECTOR  reduce using rule 5 (rule -> selector_list LBRACE declaration_list RBRACE .)
+    $end            reduce using rule 5 (rule -> selector_list LBRACE declaration_list RBRACE .)
+
+
+state 19
+
+    (12) declaration_list -> declaration_list declaration .
+
+    RBRACE          reduce using rule 12 (declaration_list -> declaration_list declaration .)
+    IDENTIFIER      reduce using rule 12 (declaration_list -> declaration_list declaration .)
+
+
+state 20
+
+    (14) declaration -> IDENTIFIER COLON . value SEMICOLON
+    (15) value -> . IDENTIFIER
+    (16) value -> . HEXCOLOR
+    (17) value -> . NUMBER
+    (18) value -> . NUMBER UNITS
+
+    IDENTIFIER      shift and go to state 21
+    HEXCOLOR        shift and go to state 23
+    NUMBER          shift and go to state 24
+
+    value                          shift and go to state 22
+
+state 21
+
+    (15) value -> IDENTIFIER .
+
+    SEMICOLON       reduce using rule 15 (value -> IDENTIFIER .)
+
+
+state 22
+
+    (14) declaration -> IDENTIFIER COLON value . SEMICOLON
+
+    SEMICOLON       shift and go to state 25
+
+
+state 23
+
+    (16) value -> HEXCOLOR .
+
+    SEMICOLON       reduce using rule 16 (value -> HEXCOLOR .)
+
+
+state 24
+
+    (17) value -> NUMBER .
+    (18) value -> NUMBER . UNITS
+
+    SEMICOLON       reduce using rule 17 (value -> NUMBER .)
+    UNITS           shift and go to state 26
+
+
+state 25
+
+    (14) declaration -> IDENTIFIER COLON value SEMICOLON .
+
+    RBRACE          reduce using rule 14 (declaration -> IDENTIFIER COLON value SEMICOLON .)
+    IDENTIFIER      reduce using rule 14 (declaration -> IDENTIFIER COLON value SEMICOLON .)
+
+
+state 26
+
+    (18) value -> NUMBER UNITS .
+
+    SEMICOLON       reduce using rule 18 (value -> NUMBER UNITS .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for IDENTIFIER in state 11 resolved as shift
