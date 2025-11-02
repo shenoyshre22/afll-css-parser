@@ -1,7 +1,7 @@
 # main.py
 
 from lexer import lexer
-from parser import parser, PARSE_ERROR_FLAG  # Import the flag
+from parser import parser  # <-- REMOVE 'PARSE_ERROR_FLAG'
 import sys
 
 print("CSS Syntax Validator")
@@ -22,12 +22,17 @@ if not input_data.strip():
 else:
     print("\n--- Parsing Input ---")
     
+    # --- ADD THIS LINE ---
+    # Reset the error flag on the lexer before each parse
+    lexer.error_found = False 
+    
     result = parser.parse(input_data, lexer=lexer)
     
     print("-----------------------")
     
-    # Check the flag INSTEAD of the 'result'
-    if not PARSE_ERROR_FLAG:
+    # --- UPDATE THIS CHECK ---
+    # Check the flag on the lexer object
+    if not lexer.error_found:
         print(" Syntax: Accepted YAY")
     else:
         print(" Syntax: Rejected (See error messages above)")
